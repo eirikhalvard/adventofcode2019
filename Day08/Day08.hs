@@ -15,7 +15,7 @@ solveA :: [[[Int]]] -> Int
 solveA = calculate . chooseLayer
 
 countDigit :: Int -> [[Int]] -> Int
-countDigit d = length . toListOf (each . each . filtered (==d))
+countDigit d = lengthOf (each . each . filtered (==d))
 
 chooseLayer :: [[[Int]]] -> [[Int]]
 chooseLayer = minimumOn (countDigit 0)
