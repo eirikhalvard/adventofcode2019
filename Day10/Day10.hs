@@ -11,13 +11,15 @@ parseInput :: String -> [Asteroid]
 parseInput = toListOf $ to lines
                       . (itraversed<.>itraversed)
                       . filtered (=='#')
-                      . withIndex
-                      . to (swap . fst)
+                      . asIndex
+                      . to swap
+
 
 solveA :: [Asteroid] -> (Int, Asteroid)
 solveA positions = maximumOn fst (fmap numInSight positions)
   where
-    numInSight pos = (,pos) . length $ nubOn (angleFrom pos) positions
+    numInSight pos = (,pos) . length . nubOn (angleFrom pos) $ positions
+
 
 solveB :: Asteroid -> [Asteroid] -> Int
 solveB pos positions = asteroidX * 100 + asteroidY
@@ -38,7 +40,6 @@ angleFromTop (x,y) (x',y') = pi - atan2 (fromIntegral (x'-x)) (fromIntegral (y'-
 angleFrom :: Asteroid -> Asteroid -> Float
 angleFrom a b = uncurry atan2 . (each %~ fromIntegral) $ coordDiff a b
   where coordDiff (y,x) (y',x') = (y'-y, x'-x)
-
 
 main :: IO ()
 main = do
