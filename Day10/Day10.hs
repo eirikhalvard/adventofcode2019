@@ -22,8 +22,8 @@ solveA positions = maximumOn fst (fmap numInSight positions)
 solveB :: Asteroid -> [Asteroid] -> Int
 solveB pos positions = asteroidX * 100 + asteroidY
   where 
-    (asteroidX, asteroidY) = minimumOn (lengthFrom pos) . (!! 199) 
-                           . fmap (sortOn (lengthFrom pos)) 
+    (asteroidX, asteroidY) = minimumOn (lengthFrom pos) 
+                           . (!! 199) 
                            . groupOn f 
                            . sortOn f 
                            . filter (/= pos) 
