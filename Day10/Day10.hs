@@ -8,11 +8,11 @@ import Data.Tuple (swap)
 type Asteroid = (Int,Int)
 
 parseInput :: String -> [Asteroid]
-parseInput = toListOf ((itraversed<.>itraversed)
+parseInput = toListOf $ to lines
+                      . (itraversed<.>itraversed)
                       . filtered (=='#')
                       . withIndex
-                      . to (swap . fst))
-           . lines
+                      . to (swap . fst)
 
 solveA :: [Asteroid] -> (Int, Asteroid)
 solveA positions = maximumOn fst (fmap numInSight positions)
